@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu Học Tập - Bài 4: Một số vấn đề pháp lí về sử dụng dịch vụ Internet - CHỦ ĐỀ 3 - TIN HỌC 9</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0fdfa;
+            background-image: radial-gradient(#bae6fd 1px, transparent 1px);
+            background-size: 20px 20px;
+            scroll-behavior: smooth;
+        }
+        .section-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .section-header {
+            border-radius: 1.5rem 1.5rem 0 0;
+            padding: 1rem 1.5rem;
+            color: white;
+            font-weight: 800;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        /* Drag and drop styles */
+        .drag-item {
+            cursor: grab;
+            transition: transform 0.1s;
+        }
+        .drag-item:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+        .drop-zone {
+            min-height: 100px;
+            border: 2px dashed #cbd5e1;
+            transition: all 0.2s;
+        }
+        .drop-zone.drag-over {
+            background-color: #f1f5f9;
+            border-color: #3b82f6;
+        }
+
+        /* Matching game styles */
+        .match-item {
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .match-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .match-item.selected {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+            transform: scale(1.02);
+        }
+
+        /* Feedback and review styles */
+        .feedback-box {
+            display: none;
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background-color: #dcfce7;
+            border-left: 4px solid #22c55e;
+            font-size: 0.9rem;
+        }
+        .review-mode .feedback-box {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .correct-border { border: 2px solid #22c55e !important; }
+        .wrong-border { border: 2px solid #ef4444 !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .match-color-0 { background-color: #fecaca !important; border-color: #f87171 !important; color: #7f1d1d !important; }
+        .match-color-1 { background-color: #bfdbfe !important; border-color: #60a5fa !important; color: #1e3a8a !important; }
+        .match-color-2 { background-color: #bbf7d0 !important; border-color: #4ade80 !important; color: #14532d !important; }
+        .match-color-3 { background-color: #fef08a !important; border-color: #facc15 !important; color: #713f12 !important; }
+        .match-color-4 { background-color: #e9d5ff !important; border-color: #c084fc !important; color: #581c87 !important; }
+        .match-color-5 { background-color: #fed7aa !important; border-color: #fb923c !important; color: #7c2d12 !important; }
+        .match-color-6 { background-color: #a7f3d0 !important; border-color: #34d399 !important; color: #064e3b !important; }
+        .match-color-7 { background-color: #fbcfe8 !important; border-color: #f472b6 !important; color: #831843 !important; }
+    </style>
+</head>
+<body class="text-gray-800 pb-20">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <h1 class="text-xl md:text-2xl font-extrabold text-blue-600 text-center uppercase">
+                CHỦ ĐỀ 3 - TIN HỌC 9. Bài 4: Một số vấn đề pháp lí về sử dụng dịch vụ Internet
+            </h1>
+            <div class="flex gap-4 w-full sm:w-auto">
+                <input type="text" placeholder="Họ và tên..." class="header-input w-full sm:w-48 px-3 py-1.5 border-2 border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 font-semibold text-sm">
+                <input type="text" placeholder="Lớp..." class="header-input w-24 px-3 py-1.5 border-2 border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 font-semibold text-sm">
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 mt-8">
+
+        <section id="part1" class="section-card">
+            <div class="section-header bg-rose-500">
+                <span class="bg-white text-rose-500 rounded-full w-8 h-8 flex items-center justify-center font-bold">1</span>
+                KHỞI ĐỘNG: BÁNH XE CÔNG NGHỆ
+            </div>
+            <div class="p-6">
+                <p class="mb-4 font-semibold text-gray-700">Kéo thả các thẻ tác động vào đúng nhóm đối tượng bị ảnh hưởng (hoặc click vào thẻ sau đó click vào ô muốn xếp).</p>
+                
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="w-full md:w-1/3 p-4 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 min-h-[150px]" id="source-zone">
+                        <!-- Items generated via JS -->
+                    </div>
+                    <div class="w-full md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-rose-50 rounded-xl p-3 border-2 border-rose-200">
+                            <h3 class="font-bold text-rose-700 text-center mb-2"><i class="fas fa-user-injured mr-2"></i>Con người</h3>
+                            <div class="drop-zone rounded-lg p-2 flex flex-wrap gap-2" id="zone-connguoi" data-category="connguoi"></div>
+                        </div>
+                        <div class="bg-blue-50 rounded-xl p-3 border-2 border-blue-200">
+                            <h3 class="font-bold text-blue-700 text-center mb-2"><i class="fas fa-city mr-2"></i>Xã hội, việc làm</h3>
+                            <div class="drop-zone rounded-lg p-2 flex flex-wrap gap-2" id="zone-xahoi" data-category="xahoi"></div>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-3 border-2 border-yellow-200">
+                            <h3 class="font-bold text-yellow-700 text-center mb-2"><i class="fas fa-lock mr-2"></i>Thông tin cá nhân</h3>
+                            <div class="drop-zone rounded-lg p-2 flex flex-wrap gap-2" id="zone-thongtin" data-category="thongtin"></div>
+                        </div>
+                        <div class="bg-green-50 rounded-xl p-3 border-2 border-green-200">
+                            <h3 class="font-bold text-green-700 text-center mb-2"><i class="fas fa-globe-americas mr-2"></i>Môi trường</h3>
+                            <div class="drop-zone rounded-lg p-2 flex flex-wrap gap-2" id="zone-moitruong" data-category="moitruong"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feedback-box mt-4">
+                    <strong>Gợi ý:</strong>
+                    <ul class="list-disc pl-5 mt-1">
+                        <li><b>Con người:</b> Nghiện Internet, Mất ngủ, Ít giao tiếp</li>
+                        <li><b>Xã hội, việc làm:</b> Lừa đảo qua mạng, Mất việc làm</li>
+                        <li><b>Thông tin:</b> Bị đánh cắp thông tin</li>
+                        <li><b>Môi trường:</b> Rác thải thiết bị, Gây ô nhiễm môi trường</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="part2" class="section-card">
+            <div class="section-header bg-blue-500">
+                <span class="bg-white text-blue-500 rounded-full w-8 h-8 flex items-center justify-center font-bold">2</span>
+                THÁM TỬ MÔI TRƯỜNG SỐ
+            </div>
+            <div class="p-6">
+                <p class="mb-4 font-semibold text-gray-700">Đọc tình huống và chọn câu trả lời đúng cho hành vi vi phạm và giải thích.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="part2-container">
+                    <!-- Situations generated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <section id="part3" class="section-card">
+            <div class="section-header bg-orange-500">
+                <span class="bg-white text-orange-500 rounded-full w-8 h-8 flex items-center justify-center font-bold">3</span>
+                GIẢI MÃ Ô CHỮ 8 HÀNH VI
+            </div>
+            <div class="p-6">
+                <p class="mb-4 font-semibold text-gray-700">Đọc gợi ý bên trái và điền từ thích hợp vào ô chữ bên phải. (Mỗi ô 1 chữ cái, tiếng Việt không dấu)</p>
+                
+                <div class="flex flex-col gap-8 bg-orange-50 p-4 sm:p-6 rounded-2xl border-2 border-orange-200 shadow-inner overflow-hidden">
+                    <!-- Phần câu hỏi: Đưa lên trên, chia thành 2 cột để dễ đọc và tiết kiệm diện tích -->
+                    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4" id="crossword-questions">
+                        <!-- Generated by JS -->
+                    </div>
+                    
+                    <!-- Phần ô chữ: Đưa xuống dưới, căn giữa và tăng kích thước tối đa -->
+                    <div class="w-full overflow-x-auto flex flex-col items-center pt-8 border-t-2 border-orange-300">
+                        <div class="min-w-max flex flex-col gap-1.5 sm:gap-2 items-start" id="crossword-grid">
+                            <!-- Generated by JS -->
+                        </div>
+                        
+                        <div class="mt-10 w-full flex flex-col items-center bg-white p-6 rounded-2xl border-2 border-dashed border-orange-300 shadow-sm">
+                            <label class="font-black text-orange-800 block mb-4 text-xl uppercase tracking-wider">Từ khóa hàng dọc (8 chữ cái):</label>
+                            <div class="flex gap-2 sm:gap-3" id="keyword-container">
+                                <!-- Inputs generated by JS -->
+                            </div>
+                            <div class="feedback-box mt-4 text-center max-w-sm w-full" id="fb-crossword-keyword">
+                                <strong>Từ khóa đúng:</strong> TÔN TRỌNG
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="part4" class="section-card">
+            <div class="section-header bg-green-500">
+                <span class="bg-white text-green-500 rounded-full w-8 h-8 flex items-center justify-center font-bold">4</span>
+                SỬA LỖI HÀNH VI – NỐI ĐÁP ÁN
+            </div>
+            <div class="p-6">
+                <p class="mb-4 font-semibold text-gray-700">Click chọn 1 thẻ màu hồng (bên trái), sau đó click chọn cách ứng xử đúng màu xanh (bên phải) để tạo thành 1 cặp.</p>
+                
+                <div class="flex flex-col md:flex-row gap-8 justify-between relative">
+                    <div class="w-full md:w-[45%] space-y-3" id="match-left">
+                        <!-- Generated via JS -->
+                    </div>
+                    <div class="hidden md:flex flex-col justify-center items-center text-gray-300 text-3xl">
+                        <i class="fas fa-arrows-alt-h mb-2"></i>
+                        <i class="fas fa-arrows-alt-h mb-2"></i>
+                        <i class="fas fa-arrows-alt-h"></i>
+                    </div>
+                    <div class="w-full md:w-[45%] space-y-3" id="match-right">
+                        <!-- Generated via JS -->
+                    </div>
+                </div>
+                <button id="btn-reset-match" class="mt-6 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 font-semibold text-sm transition-colors">
+                    <i class="fas fa-undo mr-1"></i> Làm lại phần nối
+                </button>
+            </div>
+        </section>
+
+        <section id="part5" class="section-card">
+            <div class="section-header bg-purple-500">
+                <span class="bg-white text-purple-500 rounded-full w-8 h-8 flex items-center justify-center font-bold">5</span>
+                XƯỞNG KIỂM CHỨNG AI
+            </div>
+            <div class="p-6">
+                <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 mb-6 flex gap-4 items-start">
+                    <div class="text-4xl text-purple-600"><i class="fas fa-robot"></i></div>
+                    <div>
+                        <p class="font-bold text-purple-800">AI đưa ra câu trả lời:</p>
+                        <p class="italic text-gray-700">“Nếu nhóm lớp là nhóm riêng tư thì em có thể đăng ảnh của bạn mà không cần xin phép, vì chỉ có người trong lớp xem.”</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-4" id="part5-container">
+                    <!-- Generated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <section id="part6" class="section-card">
+            <div class="section-header bg-teal-500">
+                <span class="bg-white text-teal-500 rounded-full w-8 h-8 flex items-center justify-center font-bold">6</span>
+                HỘI ĐỒNG CÔNG DÂN SỐ NHÍ
+            </div>
+            <div class="p-6">
+                <div class="bg-teal-50 p-4 rounded-xl border border-teal-200 mb-6 flex gap-4 items-start">
+                    <div class="text-4xl text-teal-500"><i class="fas fa-lightbulb"></i></div>
+                    <div>
+                        <p class="font-bold text-teal-800">Tình huống:</p>
+                        <p class="text-gray-700">Một bạn trong lớp lập tài khoản mạng xã hội ẩn danh để đăng tin bịa đặt, xúc phạm bạn khác. Nhiều bạn chia sẻ bài viết đó. Em sẽ làm gì?</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="part6-container">
+                    <!-- Generated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <section id="part7" class="section-card border-red-400 border-2">
+            <div class="section-header bg-red-500 text-white">
+                <span class="bg-white text-red-500 rounded-full w-8 h-8 flex items-center justify-center font-bold">7</span>
+                CAM KẾT 3 – 2 – 1: EM LÀ CÔNG DÂN SỐ
+            </div>
+            <div class="p-6">
+                <p class="mb-4 font-semibold text-gray-700">Sau bài học, em hãy chọn đáp án để hoàn thành tấm thẻ cam kết của mình:</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="part7-container">
+                    <!-- Generated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <div class="text-center mt-10 mb-10">
+            <button id="btn-submit" class="bg-blue-600 hover:bg-blue-700 text-white text-xl font-bold py-4 px-12 rounded-full shadow-lg transform hover:scale-105 transition-all">
+                <i class="fas fa-paper-plane mr-2"></i> XÁC NHẬN NỘP BÀI
+            </button>
+        </div>
+    </main>
+
+    <div id="results-modal" class="fixed inset-0 bg-black bg-opacity-60 z-[100] hidden flex items-center justify-center backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl transform scale-95 transition-transform" id="modal-content">
+            <div class="text-6xl mb-4" id="result-icon">🎉</div>
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-2">Hoàn thành!</h2>
+            <p class="text-gray-600 mb-6">Bạn đã nộp bài thành công.</p>
+            
+            <div class="bg-blue-50 rounded-xl p-4 mb-8">
+                <p class="text-sm text-blue-800 font-semibold mb-1">Điểm tự động (Thang 100):</p>
+                <p class="text-5xl font-black text-blue-600" id="score-display">0/100</p>
+            </div>
+
+            <div class="flex flex-col gap-3">
+                <button id="btn-review" class="w-full bg-indigo-100 text-indigo-700 hover:bg-indigo-200 font-bold py-3 px-4 rounded-xl transition-colors">
+                    <i class="fas fa-search mr-2"></i> Xem lại kết quả & Gợi ý
+                </button>
+                <button id="btn-retry" class="w-full bg-gray-100 text-gray-700 hover:bg-gray-200 font-bold py-3 px-4 rounded-xl transition-colors">
+                    <i class="fas fa-redo mr-2"></i> Làm lại từ đầu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const part1Data = [
+            { id: 'p1_1', text: '1. Nghiện Internet', answer: 'connguoi' },
+            { id: 'p1_2', text: '2. Mất ngủ', answer: 'connguoi' },
+            { id: 'p1_3', text: '3. Lừa đảo qua mạng', answer: 'xahoi' },
+            { id: 'p1_4', text: '4. Rác thải thiết bị', answer: 'moitruong' },
+            { id: 'p1_5', text: '5. Mất việc làm', answer: 'xahoi' },
+            { id: 'p1_6', text: '6. Bị đánh cắp thông tin', answer: 'thongtin' },
+            { id: 'p1_7', text: '7. Ít giao tiếp', answer: 'connguoi' },
+            { id: 'p1_8', text: '8. Gây ô nhiễm môi trường', answer: 'moitruong' }
+        ];
+
+        const part2Data = [
+            { 
+                text: "Lan tải một bức ảnh đẹp trên Internet về làm bài tập, không ghi nguồn.", 
+                hanhvi: {
+                    options: ["--- Chọn hành vi ---", "Sử dụng hình ảnh của người khác không ghi nguồn.", "Vi phạm luật an ninh mạng nghiêm trọng.", "Ăn cắp bản quyền phần mềm."],
+                    answer: 1
+                }, 
+                visao: {
+                    options: ["--- Chọn lí do ---", "Bức ảnh đó có giá trị kinh tế cao.", "Cần tôn trọng quyền tác giả.", "Vì giáo viên yêu cầu như vậy."],
+                    answer: 2
+                } 
+            },
+            { 
+                text: "Minh bình luận xúc phạm bạn khác trên mạng xã hội khi tranh luận.", 
+                hanhvi: {
+                    options: ["--- Chọn hành vi ---", "Bảo vệ quan điểm cá nhân.", "Xâm phạm quyền riêng tư.", "Ứng xử thiếu văn hóa; bắt nạt qua mạng."],
+                    answer: 3
+                }, 
+                visao: {
+                    options: ["--- Chọn lí do ---", "Làm tổn thương người khác, gây mâu thuẫn.", "Thể hiện cá tính mạnh mẽ.", "Để được nhiều người chú ý hơn."],
+                    answer: 1
+                } 
+            },
+            { 
+                text: "An nhận được tin nhắn giả danh ngân hàng yêu cầu cung cấp thông tin tài khoản.", 
+                hanhvi: {
+                    options: ["--- Chọn hành vi ---", "Vi phạm bản quyền.", "Dấu hiệu lừa đảo qua mạng.", "Phát tán tin giả."],
+                    answer: 2
+                }, 
+                visao: {
+                    options: ["--- Chọn lí do ---", "Tin nhắn làm phiền.", "Để ngân hàng bảo mật tốt hơn.", "Có thể bị chiếm đoạt tài khoản, tài sản."],
+                    answer: 3
+                } 
+            },
+            { 
+                text: "Nam tải một phần mềm trả phí từ nguồn không chính thức để sử dụng.", 
+                hanhvi: {
+                    options: ["--- Chọn hành vi ---", "Lừa đảo chiếm đoạt tài sản.", "Sử dụng phần mềm không bản quyền.", "Tiết lộ thông tin cá nhân."],
+                    answer: 2
+                }, 
+                visao: {
+                    options: ["--- Chọn lí do ---", "Vì phần mềm trả phí tốn tiền.", "Làm máy tính chạy nhanh hơn.", "Xâm phạm quyền sở hữu, nguy cơ nhiễm mã độc."],
+                    answer: 3
+                } 
+            }
+        ];
+
+        /* Cập nhật lại bộ câu hỏi và đáp án để cột màu hồng khớp thành chữ TONTRONG */
+        const part3Data = [
+            { q: "Đăng hoặc chia sẻ thông tin không đúng sự thật, gây hiểu lầm là phát tán tin gì?", a: "SAISUTHAT", offset: 0 },
+            { q: "Tự ý tiết lộ họ tên, địa chỉ, số điện thoại của người khác là làm lộ ... cá nhân?", a: "THONGTIN", offset: 3 },
+            { q: "Dữ liệu về họ tên, ngày sinh, số điện thoại được gọi chung là thông tin ...?", a: "CANHAN", offset: 3 },
+            { q: "Tin nhắn quảng cáo gửi hàng loạt mà người nhận không mong muốn gọi là gì?", a: "TINRAC", offset: 5 },
+            { q: "Thiết bị điện tử hỏng bị vứt bỏ bừa bãi sẽ tạo ra ... điện tử, gây ô nhiễm.", a: "RACTHAI", offset: 5 },
+            { q: "Dùng thủ đoạn gian dối để chiếm đoạt tài sản qua Internet là hành vi gì?", a: "LUADAO", offset: 0 },
+            { q: "Phần mềm được bảo vệ quyền sử dụng và không được sao chép trái phép có vấn đề liên quan đến gì?", a: "BANQUYEN", offset: 3 },
+            { q: "Sử dụng dữ liệu của người khác là vi phạm pháp luật nếu chưa được người đó ...?", a: "DONGY", offset: 2 }
+        ];
+
+        const part4Left = [
+            { id: 'l1', text: "1. Chia sẻ tin chưa kiểm chứng" },
+            { id: 'l2', text: "2. Đăng ảnh bạn lên mạng khi chưa xin phép" },
+            { id: 'l3', text: "3. Gửi nhiều tin nhắn quảng cáo" },
+            { id: 'l4', text: "4. Sử dụng phần mềm không bản quyền" },
+            { id: 'l5', text: "5. Bắt nạt, xúc phạm người khác" },
+            { id: 'l6', text: "6. Cung cấp thông tin cá nhân cho người lạ" },
+            { id: 'l7', text: "7. Ứng xử thiếu văn hóa khi tranh luận" },
+            { id: 'l8', text: "8. Truy cập đường link nghi ngờ" }
+        ];
+
+        const part4Right = [
+            { id: 'r2', text: "Xin phép trước khi đăng", match: 'l2' },
+            { id: 'r6', text: "Bảo vệ thông tin cá nhân", match: 'l6' },
+            { id: 'r1', text: "Kiểm chứng thông tin trước khi chia sẻ", match: 'l1' },
+            { id: 'r4', text: "Sử dụng phần mềm hợp pháp", match: 'l4' },
+            { id: 'r8', text: "Không truy cập, báo cho người lớn", match: 'l8' },
+            { id: 'r3', text: "Chỉ gửi khi được phép, không gây phiền nhiễu", match: 'l3' },
+            { id: 'r7', text: "Giao tiếp lịch sự, tôn trọng người đối thoại", match: 'l7' },
+            { id: 'r5', text: "Tôn trọng và không xúc phạm người khác", match: 'l5' }
+        ];
+
+        const part5Data = [
+            { 
+                q: "1. Em có đồng ý với câu trả lời của AI không? Vì sao?", 
+                options: ["--- Chọn câu trả lời ---", "Đồng ý. Vì chỉ có bạn bè trong lớp xem.", "Không đồng ý. Nhóm riêng tư không có nghĩa là được tự ý đăng ảnh.", "Đồng ý một phần, nếu ảnh đẹp thì được đăng."],
+                answer: 2
+            },
+            { 
+                q: "2. AI đã đúng và chưa đúng ở điểm nào?", 
+                options: ["--- Chọn câu trả lời ---", "AI trả lời hoàn toàn chính xác.", "AI sai vì cấm hoàn toàn việc đăng ảnh.", "Chưa xét đến sự đồng ý của người trong ảnh và nguy cơ rò rỉ."],
+                answer: 3
+            },
+            { 
+                q: "3. Theo em, cách ứng xử đúng là gì?", 
+                options: ["--- Chọn câu trả lời ---", "Chỉnh sửa ảnh thật đẹp rồi mới đăng.", "Xin phép người trong ảnh trước khi đăng.", "Chỉ đăng vào ban đêm để ít người thấy."],
+                answer: 2
+            },
+            { 
+                q: "4. Cần khai báo trung thực việc sử dụng AI như thế nào?", 
+                options: ["--- Chọn câu trả lời ---", "Không cần khai báo vì không ai biết.", "Nói rằng đây là bài tự làm 100%.", "Khai báo đã dùng AI tham khảo, kiểm chứng và chịu trách nhiệm."],
+                answer: 3
+            }
+        ];
+
+        const part6Data = [
+            {
+                title: "Bước 1: Nhận diện vấn đề",
+                options: ["--- Chọn nhận diện ---", "Hành vi đăng tin bịa đặt, xúc phạm (bắt nạt qua mạng).", "Quyền tự do ngôn luận trên mạng.", "Một trò đùa vui vẻ vô hại."],
+                answer: 1
+            },
+            {
+                title: "Bước 2: Đề xuất cách làm",
+                options: ["--- Chọn cách làm ---", "Bình luận bênh vực bằng lời lẽ xúc phạm lại.", "Không chia sẻ tiếp; lưu bằng chứng; báo người lớn.", "Chia sẻ để mọi người cùng cảnh giác."],
+                answer: 2
+            },
+            {
+                title: "Bước 3: Giải thích lí do",
+                options: ["--- Chọn lí do ---", "Để câu like, thu hút sự chú ý.", "Để trả đũa người đã đăng tin.", "Ngăn chặn lan truyền sai sự thật, bảo vệ nạn nhân."],
+                answer: 3
+            }
+        ];
+
+        const part7Data = {
+            do: [
+                { options: ["--- Chọn cam kết ---", "Kiểm chứng thông tin trước khi chia sẻ.", "Chia sẻ mọi thông tin nóng hổi.", "Chỉ đọc, không bao giờ chia sẻ gì."], answer: 1 },
+                { options: ["--- Chọn cam kết ---", "Tự ý đăng ảnh bạn bè lên mạng.", "Xin phép trước khi đăng hình ảnh của người khác.", "Lấy ảnh mạng không cần ghi nguồn."], answer: 2 },
+                { options: ["--- Chọn cam kết ---", "Sử dụng phần mềm bẻ khóa để tiết kiệm.", "Công khai mật khẩu cho bạn thân.", "Giao tiếp lịch sự, bảo vệ thông tin cá nhân."], answer: 3 }
+            ],
+            avoid: [
+                { options: ["--- Chọn điều tránh ---", "Kết bạn với tất cả mọi người.", "Không cung cấp mật khẩu, thông tin nhạy cảm cho người lạ.", "Tải mọi ứng dụng miễn phí."], answer: 2 },
+                { options: ["--- Chọn điều tránh ---", "Không chia sẻ tin chưa kiểm chứng, không bắt nạt người khác.", "Không sử dụng mạng xã hội nữa.", "Không tranh luận với ai trên mạng."], answer: 1 }
+            ],
+            message: { options: ["--- Chọn thông điệp ---", "Internet là ảo, tự do thể hiện bản thân.", "Dừng lại – kiểm chứng – ứng xử có trách nhiệm.", "Nhanh tay chia sẻ, nhận quà liền tay."], answer: 2 }
+        };
+
+        function normalizeString(str) {
+            if(!str) return "";
+            return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/\s+/g, "").trim();
+        }
+
+        function initPart1() {
+            const sourceZone = document.getElementById('source-zone');
+            sourceZone.innerHTML = '';
+            part1Data.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'drag-item bg-white border border-gray-300 rounded-full px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm inline-block m-1 hover:bg-gray-50';
+                el.draggable = true;
+                el.id = item.id;
+                el.textContent = item.text;
+                el.dataset.answer = item.answer;
+                
+                el.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', e.target.id);
+                    setTimeout(() => el.style.opacity = '0.5', 0);
+                });
+                el.addEventListener('dragend', () => el.style.opacity = '1');
+                el.addEventListener('click', () => {
+                    document.querySelectorAll('.drag-item').forEach(i => i.classList.remove('ring-2', 'ring-blue-500'));
+                    el.classList.add('ring-2', 'ring-blue-500');
+                    window.selectedDragItem = el;
+                });
+                sourceZone.appendChild(el);
+            });
+
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('drag-over'); });
+                zone.addEventListener('dragleave', () => zone.classList.remove('drag-over') );
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    const id = e.dataTransfer.getData('text/plain');
+                    const draggable = document.getElementById(id);
+                    if(draggable) {
+                        zone.appendChild(draggable);
+                        draggable.classList.remove('ring-2', 'ring-blue-500');
+                    }
+                });
+                zone.parentElement.addEventListener('click', () => {
+                    if(window.selectedDragItem && zone.id !== 'source-zone') {
+                        zone.appendChild(window.selectedDragItem);
+                        window.selectedDragItem.classList.remove('ring-2', 'ring-blue-500');
+                        window.selectedDragItem = null;
+                    }
+                });
+            });
+            sourceZone.addEventListener('click', () => {
+                 if(window.selectedDragItem) {
+                    sourceZone.appendChild(window.selectedDragItem);
+                    window.selectedDragItem.classList.remove('ring-2', 'ring-blue-500');
+                    window.selectedDragItem = null;
+                }
+            });
+        }
+
+        function initPart2() {
+            const container = document.getElementById('part2-container');
+            container.innerHTML = '';
+            part2Data.forEach((item, index) => {
+                const id = `p2_${index}`;
+                let hanhviOptions = item.hanhvi.options.map((opt, i) => `<option value="${i}">${opt}</option>`).join('');
+                let visaoOptions = item.visao.options.map((opt, i) => `<option value="${i}">${opt}</option>`).join('');
+
+                container.innerHTML += `
+                    <div class="bg-blue-50 rounded-xl p-4 border border-blue-100 relative">
+                        <div class="absolute -top-3 -left-3 bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold border-2 border-white">${index+1}</div>
+                        <p class="font-bold text-blue-900 mb-3 ml-4">${item.text}</p>
+                        <select id="${id}_hanhvi" class="w-full mb-2 p-2 rounded border border-blue-200 text-sm focus:outline-none focus:border-blue-500 bg-white" data-answer="${item.hanhvi.answer}">
+                            ${hanhviOptions}
+                        </select>
+                        <select id="${id}_visao" class="w-full p-2 rounded border border-blue-200 text-sm focus:outline-none focus:border-blue-500 bg-white" data-answer="${item.visao.answer}">
+                            ${visaoOptions}
+                        </select>
+                        <div class="feedback-box mt-2" id="fb_${id}">
+                            <strong>Đúng:</strong><br>
+                            - Hành vi: ${item.hanhvi.options[item.hanhvi.answer]}<br>
+                            - Vì sao: ${item.visao.options[item.visao.answer]}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function initPart3() {
+            const questionsContainer = document.getElementById('crossword-questions');
+            const gridContainer = document.getElementById('crossword-grid');
+            
+            questionsContainer.innerHTML = '';
+            gridContainer.innerHTML = '';
+            const pinkColIndex = 5; 
+            
+            part3Data.forEach((item, index) => {
+                questionsContainer.innerHTML += `
+                    <div class="flex gap-3 bg-white p-3 sm:p-4 rounded-xl shadow-sm border border-orange-100 transition-transform hover:-translate-y-1 h-full items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">
+                            ${index + 1}
+                        </div>
+                        <div class="text-sm font-semibold text-gray-700 pt-1 leading-snug">
+                            ${item.q}
+                        </div>
+                    </div>
+                `;
+                
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'flex items-center gap-1 sm:gap-1.5 md:gap-2';
+                const numBadge = document.createElement('div');
+                numBadge.className = 'w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-orange-400 text-white flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 shadow-md shrink-0';
+                numBadge.textContent = index + 1;
+                rowDiv.appendChild(numBadge);
+                
+                for (let i = 0; i < item.offset; i++) {
+                    const spacer = document.createElement('div');
+                    // Tăng kích thước ô trống tương ứng
+                    spacer.className = 'w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 shrink-0'; 
+                    rowDiv.appendChild(spacer);
+                }
+                
+                for (let i = 0; i < item.a.length; i++) {
+                    const globalColIndex = item.offset + i;
+                    const isPink = (globalColIndex === pinkColIndex);
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.maxLength = 1;
+                    input.dataset.row = index;
+                    input.dataset.col = i;
+                    
+                    // Tăng kích thước ô nhập liệu và cỡ chữ
+                    let baseClass = 'w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-center uppercase font-black text-base sm:text-xl md:text-2xl border-2 rounded-lg focus:outline-none focus:ring-4 focus:ring-orange-300 transition-all shadow-sm shrink-0 ';
+                    if (isPink) baseClass += 'bg-pink-100 border-pink-500 text-pink-800 shadow-inner z-10 relative';
+                    else baseClass += 'bg-white border-gray-300 text-gray-800';
+                    
+                    input.className = baseClass;
+                    input.id = `cw_${index}_${i}`;
+                    
+                    input.addEventListener('input', (e) => {
+                        const val = normalizeString(e.target.value);
+                        e.target.value = val.toUpperCase();
+                        if (e.target.value.length === 1) {
+                            const nextInput = document.getElementById(`cw_${index}_${i + 1}`);
+                            if (nextInput) nextInput.focus();
+                        }
+                    });
+                    
+                    input.addEventListener('keydown', (e) => {
+                        if (e.key === 'Backspace' && e.target.value === '') {
+                            const prevInput = document.getElementById(`cw_${index}_${i - 1}`);
+                            if (prevInput) prevInput.focus();
+                        }
+                    });
+                    rowDiv.appendChild(input);
+                }
+                gridContainer.appendChild(rowDiv);
+            });
+
+            const keywordContainer = document.getElementById('keyword-container');
+            keywordContainer.innerHTML = '';
+            for(let i=0; i<8; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.maxLength = 1;
+                input.value = ''; 
+                // Ô từ khóa lớn, viền 4px đen nổi bật
+                input.className = 'w-10 h-12 sm:w-12 sm:h-14 md:w-16 md:h-16 text-center uppercase font-black text-2xl md:text-4xl text-gray-800 bg-white border-4 border-gray-800 focus:outline-none focus:border-orange-500 focus:bg-orange-50 rounded-xl transition-all shadow-lg';
+                input.id = `kw_input_${i}`;
+                
+                input.addEventListener('input', (e) => {
+                    const val = normalizeString(e.target.value);
+                    e.target.value = val.toUpperCase();
+                    if (e.target.value.length === 1 && i < 7) {
+                        document.getElementById(`kw_input_${i + 1}`).focus();
+                    }
+                });
+                
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && e.target.value === '' && i > 0) {
+                        document.getElementById(`kw_input_${i - 1}`).focus();
+                    }
+                });
+                keywordContainer.appendChild(input);
+            }
+        }
+
+        let matchedPairs = {};
+        let currentLeft = null;
+        let colorIndex = 0;
+
+        function initPart4() {
+            const leftContainer = document.getElementById('match-left');
+            const rightContainer = document.getElementById('match-right');
+            leftContainer.innerHTML = '';
+            rightContainer.innerHTML = '';
+            matchedPairs = {};
+            currentLeft = null;
+            colorIndex = 0;
+
+            part4Left.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'match-item bg-rose-50 border-2 border-rose-200 p-3 rounded-lg text-sm font-semibold text-gray-700 text-center relative';
+                el.id = item.id;
+                el.textContent = item.text;
+                el.onclick = () => handleLeftClick(el);
+                leftContainer.appendChild(el);
+            });
+
+            part4Right.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'match-item bg-blue-50 border-2 border-blue-200 p-3 rounded-lg text-sm font-semibold text-gray-700 text-center relative';
+                el.id = item.id;
+                el.textContent = item.text;
+                el.dataset.match = item.match;
+                el.onclick = () => handleRightClick(el);
+                rightContainer.appendChild(el);
+            });
+
+            document.getElementById('btn-reset-match').onclick = initPart4;
+        }
+
+        function handleLeftClick(el) {
+            if(document.body.classList.contains('review-mode')) return;
+            document.querySelectorAll('#match-left .match-item').forEach(i => {
+                if(!i.dataset.paired) i.classList.remove('selected');
+            });
+            if(el.dataset.paired) {
+                const pairedRightId = matchedPairs[el.id];
+                if(pairedRightId) {
+                    const rEl = document.getElementById(pairedRightId);
+                    resetMatchStyles(el, rEl);
+                    delete matchedPairs[el.id];
+                }
+                currentLeft = null;
+            } else {
+                el.classList.add('selected');
+                currentLeft = el;
+            }
+        }
+
+        function handleRightClick(el) {
+             if(document.body.classList.contains('review-mode')) return;
+             if(el.dataset.paired) {
+                const leftId = Object.keys(matchedPairs).find(k => matchedPairs[k] === el.id);
+                if(leftId) {
+                    const lEl = document.getElementById(leftId);
+                    resetMatchStyles(lEl, el);
+                    delete matchedPairs[leftId];
+                }
+             } else if(currentLeft) {
+                matchedPairs[currentLeft.id] = el.id;
+                const cName = `match-color-${colorIndex % 8}`;
+                colorIndex++;
+                [currentLeft, el].forEach(node => {
+                    node.classList.remove('selected', 'bg-rose-50', 'bg-blue-50', 'border-rose-200', 'border-blue-200');
+                    node.classList.add(cName);
+                    node.dataset.paired = "true";
+                    node.dataset.colorClass = cName;
+                });
+                currentLeft = null;
+             }
+        }
+
+        function resetMatchStyles(lEl, rEl) {
+            const cClass = lEl.dataset.colorClass;
+            [lEl, rEl].forEach(node => {
+                node.classList.remove(cClass);
+                delete node.dataset.paired;
+                delete node.dataset.colorClass;
+            });
+            lEl.classList.add('bg-rose-50', 'border-rose-200');
+            rEl.classList.add('bg-blue-50', 'border-blue-200');
+        }
+
+        function initPart5() {
+            const container = document.getElementById('part5-container');
+            container.innerHTML = '';
+            part5Data.forEach((item, index) => {
+                const id = `p5_${index}`;
+                let optionsHtml = item.options.map((opt, i) => `<option value="${i}">${opt}</option>`).join('');
+                container.innerHTML += `
+                    <div class="mb-4">
+                        <label class="block font-semibold text-gray-700 mb-2">${item.q}</label>
+                        <select id="${id}" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:border-purple-500 text-sm bg-white shadow-sm" data-answer="${item.answer}">
+                            ${optionsHtml}
+                        </select>
+                        <div class="feedback-box mt-1 text-sm" id="fb_${id}">
+                            <strong>Đáp án:</strong> ${item.options[item.answer]}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function initPart6() {
+            const container = document.getElementById('part6-container');
+            container.innerHTML = '';
+            part6Data.forEach((item, index) => {
+                const id = `p6_${index}`;
+                let optionsHtml = item.options.map((opt, i) => `<option value="${i}">${opt}</option>`).join('');
+                container.innerHTML += `
+                    <div class="bg-white border-2 border-teal-100 rounded-xl p-4 flex flex-col h-full shadow-sm">
+                        <h4 class="font-bold text-teal-700 mb-3 border-b border-teal-100 pb-2 text-center">${item.title}</h4>
+                        <select id="${id}" class="w-full p-2 rounded border border-teal-200 focus:outline-none focus:border-teal-500 text-sm bg-teal-50" data-answer="${item.answer}">
+                            ${optionsHtml}
+                        </select>
+                        <div class="feedback-box mt-3 text-sm" id="fb_${id}">
+                            <strong>Đáp án:</strong> ${item.options[item.answer]}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function initPart7() {
+            const container = document.getElementById('part7-container');
+            
+            let doHtml = part7Data.do.map((item, i) => `
+                <select id="p7_do_${i}" class="w-full mb-3 p-2 text-sm border border-green-300 rounded focus:outline-none focus:border-green-500 bg-white" data-answer="${item.answer}">
+                    ${item.options.map((opt, idx) => `<option value="${idx}">${opt}</option>`).join('')}
+                </select>
+            `).join('');
+
+            let avoidHtml = part7Data.avoid.map((item, i) => `
+                <select id="p7_avoid_${i}" class="w-full mb-3 p-2 text-sm border border-rose-300 rounded focus:outline-none focus:border-rose-500 bg-white" data-answer="${item.answer}">
+                    ${item.options.map((opt, idx) => `<option value="${idx}">${opt}</option>`).join('')}
+                </select>
+            `).join('');
+
+            let msgHtml = `
+                <select id="p7_msg" class="w-full p-2 text-sm border border-yellow-300 rounded focus:outline-none focus:border-yellow-500 bg-white" data-answer="${part7Data.message.answer}">
+                    ${part7Data.message.options.map((opt, idx) => `<option value="${idx}">${opt}</option>`).join('')}
+                </select>
+            `;
+
+            container.innerHTML = `
+                <div class="bg-green-50 border-2 border-green-200 rounded-xl p-4">
+                    <h4 class="font-bold text-green-700 mb-3"><i class="fas fa-check-circle mr-1"></i> 3 điều em sẽ làm</h4>
+                    ${doHtml}
+                    <div class="feedback-box mt-2 text-xs">
+                        <strong>Đáp án:</strong> Kiểm chứng thông tin, Xin phép trước khi đăng ảnh, Giao tiếp lịch sự.
+                    </div>
+                </div>
+                <div class="bg-rose-50 border-2 border-rose-200 rounded-xl p-4">
+                    <h4 class="font-bold text-rose-700 mb-3"><i class="fas fa-times-circle mr-1"></i> 2 điều em sẽ tránh</h4>
+                    ${avoidHtml}
+                    <div class="feedback-box mt-2 text-xs">
+                        <strong>Đáp án:</strong> Không cung cấp mật khẩu cho người lạ, Không chia sẻ tin chưa kiểm chứng.
+                    </div>
+                </div>
+                <div class="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-4 flex flex-col">
+                    <h4 class="font-bold text-yellow-700 mb-3"><i class="fas fa-bullhorn mr-1"></i> 1 thông điệp lan tỏa</h4>
+                    ${msgHtml}
+                    <div class="feedback-box mt-2 text-xs">
+                        <strong>Đáp án:</strong> Dừng lại – kiểm chứng – ứng xử có trách nhiệm.
+                    </div>
+                </div>
+            `;
+        }
+
+        function evaluateAnswers() {
+            let totalScore = 0;
+            document.body.classList.add('review-mode'); 
+
+            // Part 1 (15 pts)
+            let p1Correct = 0;
+            document.querySelectorAll('.drag-item').forEach(item => {
+                const parentZone = item.parentElement;
+                if(parentZone.classList.contains('drop-zone')) {
+                    if(parentZone.dataset.category === item.dataset.answer) {
+                        item.classList.add('correct-border');
+                        p1Correct++;
+                    } else { item.classList.add('wrong-border'); }
+                } else { item.classList.add('wrong-border'); }
+            });
+            totalScore += (p1Correct / 8) * 15;
+
+            // Part 2 (15 pts)
+            let p2Correct = 0;
+            document.querySelectorAll('#part2-container select').forEach(sel => {
+                if(parseInt(sel.value) === parseInt(sel.dataset.answer)) {
+                    p2Correct++;
+                    sel.classList.add('correct-border', 'bg-green-100');
+                } else {
+                    sel.classList.add('wrong-border', 'bg-red-100');
+                }
+                sel.disabled = true;
+            });
+            totalScore += (p2Correct / 8) * 15;
+
+            // Part 3 (20 pts)
+            let p3CorrectRows = 0;
+            part3Data.forEach((item, index) => {
+                let isRowCorrect = true;
+                let rowHasInput = false;
+                for (let i = 0; i < item.a.length; i++) {
+                    const input = document.getElementById(`cw_${index}_${i}`);
+                    if (!input) continue;
+                    const userChar = normalizeString(input.value);
+                    const correctChar = normalizeString(item.a[i]);
+                    if (userChar !== '') rowHasInput = true;
+                    if (userChar === correctChar) {
+                        input.classList.remove('border-gray-300', 'border-pink-400');
+                        input.classList.add('correct-border', 'bg-green-100');
+                    } else {
+                        input.classList.remove('border-gray-300', 'border-pink-400');
+                        input.classList.add('wrong-border', 'bg-red-100');
+                        isRowCorrect = false;
+                    }
+                    input.disabled = true;
+                }
+                if (isRowCorrect && rowHasInput) p3CorrectRows++;
+            });
+            
+            let userKw = "";
+            let kwInputs = [];
+            for(let i=0; i<8; i++) {
+                const inp = document.getElementById(`kw_input_${i}`);
+                if(inp) {
+                    userKw += normalizeString(inp.value);
+                    kwInputs.push(inp);
+                }
+            }
+            const kwContainer = document.getElementById('keyword-container');
+            let isKwCorrect = 0;
+            if(userKw === 'tontrong') {
+                kwContainer.classList.add('correct-border', 'bg-green-50');
+                kwInputs.forEach(inp => { inp.classList.add('text-green-600'); });
+                isKwCorrect = 1;
+            } else {
+                kwContainer.classList.add('wrong-border', 'bg-red-50');
+                kwInputs.forEach(inp => { inp.classList.add('text-red-600'); });
+            }
+            kwInputs.forEach(inp => inp.disabled = true);
+            totalScore += ((p3CorrectRows + isKwCorrect) / 9) * 20;
+
+            // Part 4 (20 pts)
+            let p4Correct = 0;
+            Object.keys(matchedPairs).forEach(leftId => {
+                const rightId = matchedPairs[leftId];
+                const rightEl = document.getElementById(rightId);
+                const leftEl = document.getElementById(leftId);
+                
+                if(rightEl && rightEl.dataset.match === leftId) {
+                    p4Correct++;
+                    if (!leftEl.querySelector('.fa-check')) leftEl.innerHTML += ' <i class="fas fa-check text-green-700 ml-1 absolute top-1 right-1"></i>';
+                    if (!rightEl.querySelector('.fa-check')) rightEl.innerHTML += ' <i class="fas fa-check text-green-700 ml-1 absolute top-1 right-1"></i>';
+                } else {
+                    leftEl.classList.add('wrong-border');
+                    if(rightEl) rightEl.classList.add('wrong-border');
+                }
+            });
+            document.querySelectorAll('#match-left .match-item, #match-right .match-item').forEach(el => {
+                if(!el.dataset.paired) el.classList.add('wrong-border');
+            });
+            totalScore += (p4Correct / 8) * 20;
+
+            // Part 5 (10 pts)
+            let p5Correct = 0;
+            document.querySelectorAll('#part5-container select').forEach(sel => {
+                if(parseInt(sel.value) === parseInt(sel.dataset.answer)) {
+                    p5Correct++;
+                    sel.classList.add('correct-border', 'bg-green-100');
+                } else { sel.classList.add('wrong-border', 'bg-red-100'); }
+                sel.disabled = true;
+            });
+            totalScore += (p5Correct / 4) * 10;
+
+            // Part 6 (10 pts)
+            let p6Correct = 0;
+            document.querySelectorAll('#part6-container select').forEach(sel => {
+                if(parseInt(sel.value) === parseInt(sel.dataset.answer)) {
+                    p6Correct++;
+                    sel.classList.add('correct-border', 'bg-green-100');
+                } else { sel.classList.add('wrong-border', 'bg-red-100'); }
+                sel.disabled = true;
+            });
+            totalScore += (p6Correct / 3) * 10;
+
+            // Part 7 (10 pts)
+            let p7Correct = 0;
+            document.querySelectorAll('#part7-container select').forEach(sel => {
+                if(parseInt(sel.value) === parseInt(sel.dataset.answer)) {
+                    p7Correct++;
+                    sel.classList.add('correct-border', 'bg-green-100');
+                } else { sel.classList.add('wrong-border', 'bg-red-100'); }
+                sel.disabled = true;
+            });
+            totalScore += (p7Correct / 6) * 10;
+
+            document.querySelectorAll('input[type="text"]').forEach(el => {
+                if(!el.classList.contains('header-input')) el.disabled = true;
+            });
+            const resetBtn = document.getElementById('btn-reset-match');
+            if (resetBtn) resetBtn.style.display = 'none';
+
+            return Math.round(totalScore);
+        }
+
+        // URL ung dung web Google Apps Script cua giao vien
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxcRsa818_VadggAQVCTM3WaNy7pFPQO6dBJjOdiLw_5cswKJCGpoUzvHoCRm9KaHD9/exec';
+
+        document.getElementById('btn-submit').addEventListener('click', async () => {
+            const headerInputs = document.querySelectorAll('.header-input');
+            const hoTen = (headerInputs[0]?.value || '').trim();
+            const lop = (headerInputs[1]?.value || '').trim();
+
+            if (!hoTen || !lop) {
+                alert('Em vui lòng nhập đầy đủ Họ và tên và Lớp trước khi nộp bài nhé!');
+                if (!hoTen) headerInputs[0]?.focus();
+                else headerInputs[1]?.focus();
+                return;
+            }
+
+            const submitButton = document.getElementById('btn-submit');
+            if (submitButton.dataset.submitted === 'true') return;
+            submitButton.dataset.submitted = 'true';
+            submitButton.disabled = true;
+            submitButton.classList.add('opacity-60', 'cursor-not-allowed');
+
+            const score = evaluateAnswers();
+            document.getElementById('score-display').textContent = `${score}/100`;
+
+            const statusText = document.querySelector('#results-modal p.text-gray-600');
+            if (statusText) statusText.textContent = 'Đang gửi kết quả của em đến giáo viên...';
+
+            const resultData = {
+                hoTen: hoTen,
+                lop: lop,
+                tenPhieu: 'Tin học 9 - Bài 4: Một số vấn đề pháp lí về sử dụng dịch vụ Internet',
+                diem: score,
+                maBaiLam: 'TIN9_BAI4_' + Date.now()
+            };
+
+            try {
+                // no-cors khong cho doc phan hoi; can kiem tra Google Sheets de xac nhan da ghi.
+                await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+                    body: JSON.stringify(resultData)
+                });
+                if (statusText) statusText.textContent =
+                    'Đã gửi yêu cầu lưu kết quả. Giáo viên cần kiểm tra bảng kết quả để xác nhận dữ liệu đã được ghi.';
+            } catch (error) {
+                if (statusText) statusText.textContent =
+                    'Không gửi được yêu cầu lưu kết quả. Em hãy báo giáo viên và giữ lại điểm đang hiển thị.';
+                submitButton.dataset.submitted = 'false';
+                submitButton.disabled = false;
+                submitButton.classList.remove('opacity-60', 'cursor-not-allowed');
+            }
+
+            const icon = document.getElementById('result-icon');
+            if(score >= 80) icon.textContent = '🏆';
+            else if (score >= 50) icon.textContent = '👍';
+            else icon.textContent = '💪';
+
+            const modal = document.getElementById('results-modal');
+            const content = document.getElementById('modal-content');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        });
+
+        document.getElementById('btn-review').addEventListener('click', () => {
+            document.getElementById('results-modal').classList.add('hidden');
+            document.getElementById('btn-submit').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.getElementById('btn-retry').addEventListener('click', () => {
+            location.reload(); 
+        });
+
+        window.onload = () => {
+            initPart1();
+            initPart2();
+            initPart3();
+            initPart4();
+            initPart5();
+            initPart6();
+            initPart7();
+        };
+
+    </script>
+</body>
+</html>
